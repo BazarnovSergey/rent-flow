@@ -1,0 +1,74 @@
+services:
+  # PostgreSQL for User Service
+  postgres-user:
+    image: postgres:17-alpine
+    container_name: rentflow-postgres-user
+    environment:
+      POSTGRES_DB: rentflow_user
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-user-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rentflow_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL for Tool Service
+  postgres-tool:
+    image: postgres:17-alpine
+    container_name: rentflow-postgres-tool
+    environment:
+      POSTGRES_DB: rentflow_tool
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-tool-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rentflow_tool"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # User Service
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    container_name: rentflow-user-service
+    depends_on:
+      postgres-user:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/rentflow_user
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+  # Tool Service
+  tool-service:
+    build:
+      context: .
+      dockerfile: tool-service/Dockerfile
+    container_name: rentflow-tool-service
+    depends_on:
+      postgres-tool:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-tool:5432/rentflow_tool
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8082:8080"
+    restart: unless-stopped
+
+volumes:
+  postgres-user-data:
+  postgres-tool-data:

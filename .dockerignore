@@ -1,0 +1,10 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+**/*.iml
+.idea/
+.git/
+.gitignore
+*.md
+.DS_Store
