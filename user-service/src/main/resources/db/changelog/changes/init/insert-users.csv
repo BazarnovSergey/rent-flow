@@ -1,0 +1,6 @@
+phone,email,first_name,last_name,birthday,role, status
++79991112233,ivan@example.com,Иван,Петров,1976-04-13,ADMIN,ACTIVE
++79992223344,maria@example.com,Мария,Сидорова,1988-09-11,OWNER,ACTIVE
++79993334455,alex@example.com,Алексей,Иванов,1999-01-01,USER,ACTIVE
++79994445566,olga@example.com,Ольга,Смирнова,1994-10-17,USER,ACTIVE
++79995556677,dmitry@example.com,Дмитрий,Козлов,2000-12-12,USER,BLOCKED

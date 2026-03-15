@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-users
+      author: s.bazarnov
+      runOnChange: true
+      changes:
+        - loadData:
+            tableName: users
+            file: db/changelog/changes/init/insert-users.csv
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'
+            columns:
+              - column:
+                  name: phone
+                  type: STRING
+              - column:
+                  name: email
+                  type: STRING
+              - column:
+                  name: first_name
+                  type: STRING
+              - column:
+                  name: last_name
+                  type: STRING
+              - column:
+                  name: birthday
+                  type: DATE
+              - column:
+                  name: role
+                  type: STRING
+              - column:
+                  name: status
+                  type: STRING

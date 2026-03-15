@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-table
+      author: s.bazarnov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: phone
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(100)
+              - column:
+                  name: last_name
+                  type: VARCHAR(100)
+              - column:
+                  name: birthday
+                  type: DATE
+              - column:
+                  name: role
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  defaultValue: "ACTIVE"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
